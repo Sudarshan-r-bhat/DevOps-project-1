@@ -1,17 +1,28 @@
 FROM centos:centos8
 
+# install open-ssh server.
 RUN yum -y install openssh-server
  
+# setup ssh server and copy the secret key from the host.
 RUN useradd remote_user  && \
     echo "1234" | passwd remote_user --stdin && \
-
     mkdir /home/remote_user/.ssh  && \
     chmod 700 /home/remote_user/.ssh
-COPY remote-key.pub /home/remote_user/.ssh/authorized_keys
-RUN chown remote_user:remote_user -R /home/remote_user && \
-    chmod 600 /home/remote_user/.ssh/authorized_keys
 
 RUN /usr/sbin/sshd-keygen
 
+COPY remote-key.pub /home/remote_user/.ssh/authorized_keys
+
+# change the owner and permission to the secret-key file.
+RUN chown remote_user:remote_user -R /home/remote_user/.ssh/ && \
+    chmod 600 /home/remote_user/.ssh/authorized_keys
+
+# install mysql client
+RUN yum -y install mysql 
+
+# install aws cli to persist backup data to aws S3 bucket.
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+    python3 get-pip.py && \
+    pip3 install awscli --upgrade
+
 CMD /usr/sbin/sshd -D
-    

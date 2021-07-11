@@ -1,5 +1,5 @@
-version : '2'
- services:
+version : "3"
+services:
   jenkins:
     container_name: jenkins
     image: jenkins/jenkins:latest
@@ -10,9 +10,22 @@ version : '2'
     networks:
      - net
   remote_host:
-    container-name: centos8
-    build: .
-    image: centos/centos-ssh
+    container-name: remote_host
+    image: centos/remote_host
+    build:
+      context: .
+      dockerfile: centos-build-Dockerfile
+    networks:
+     - net
+  db-host:
+    container-name: mysql_db
+    image: mysql:8.0.23
+    environment:
+     - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+     - "$PWD/db_data:/var/lib/mysql"
+    ports: 
+     - "3037:3036"
     networks:
      - net
 
