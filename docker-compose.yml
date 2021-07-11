@@ -1,0 +1,21 @@
+version : '2'
+ services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:latest
+    ports:
+     - "8080:8080"
+    volumes:
+     - "$PWD/jenkins_home:/var/jenkins_home"
+    networks:
+     - net
+  remote_host:
+    container-name: centos8
+    build: .
+    image: centos/centos-ssh
+    networks:
+     - net
+
+networks:
+  net:
+
