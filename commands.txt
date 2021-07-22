@@ -1,0 +1,30 @@
+Timeline of creation:
+1. centos-build-dockerfile
+2. docker-compose.yml
+3. remote_key
+4. remote_key.pub
+5. 
+
+===================================================================================
+NOTES:C:\Users\sudar\space-1\GitLabPersonal\devops\remote_key
+
+mysql client and aws client is installed in remote_host.
+mysql server is published at port 3307:3306
+
+
+===================================================================================
+COMMANDS USED:
+
+$ docker-compose build
+$ docker-compose up
+$ ssh -i <ssh client key> user@ssh-server-url
+
+from remote host to get connected with mysql-server within the samenetwork
+$ mysql -h devops_db-host_1 -u root -p
+
+
+
+
+
+
+
