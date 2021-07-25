@@ -3,10 +3,16 @@ Timeline of creation:
 2. docker-compose.yml
 3. remote_key
 4. remote_key.pub
-5. 
+5. id_rsa
+6. id_rsa.pub
+7. db_script.sh // to upload the MYSQL-database-dump to aws S3 bucket.
+8.  
+
 
 ===================================================================================
-NOTES:C:\Users\sudar\space-1\GitLabPersonal\devops\remote_key
+NOTES:
+
+C:\Users\sudar\space-1\GitLabPersonal\devops\remote_key
 
 mysql client and aws client is installed in remote_host.
 mysql server is published at port 3307:3306
@@ -22,6 +28,17 @@ $ ssh -i <ssh client key> user@ssh-server-url
 from remote host to get connected with mysql-server within the samenetwork
 $ mysql -h devops_db-host_1 -u root -p
 
+
+// GENERATE SSH KEY PAIR IN REMOTE-HOST AND COPY THE PUBLIC KEY TO AUTHORIZED-KEYS
+// IN REMOTE_USER AND PRIVATE KEY INTO JENKINS CONTANERS SSH DIRECTORY
+
+// inside remote_host
+$ ssh-keygen -t rsa -b 2048 -m PEM <optional-filename>
+   or
+$ ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
+$ docker cp devops_remote_host_1:/root/.ssh/id_rsa.pub ./id_rsa.pub
+$ cat id_rsa.pub > /home/remote_user/.ssh/authorized_keys
+$ docker cp ./id_rsa devops_jenkins_1:/root/.ssh/id_rsa
 
 
 

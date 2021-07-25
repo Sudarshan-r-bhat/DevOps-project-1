@@ -15,14 +15,22 @@ services:
     build:
       context: .
       dockerfile: centos-build-Dockerfile
+    ports:
+     - "22:22"
+    volumes:
+     - "remote_host_data:/tmp"
     networks:
      - net
   db-host:
     image: mysql:8.0.23
     environment:
+     - "MYSQL_USER=root"
      - "MYSQL_ROOT_PASSWORD=root"
+     - "MYSQL_PASSWORD=root"
+     - "MYSQL_DATABASE=testdb"
     volumes:
-     - "$PWD/db_data:/var/lib/mysql"
+     - "mysql_data:/var/lib/mysql"
+     - "mysql_config:/etc/mysql/conf.d"
     ports: 
      - "3037:3036"
     networks:
@@ -32,3 +40,10 @@ networks:
   net:
 volumes:
   jenkins_home:
+  mysql_data:
+  mysql_config:
+  remote_host_data:
+
+
+# The mysql needs to have 2 volumes one for config and the other for data.
+# store all persistant data to /tmp directory of 'REMOTE_HOST'
