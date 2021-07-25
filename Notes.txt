@@ -6,17 +6,11 @@ Timeline of creation:
 5. id_rsa
 6. id_rsa.pub
 7. db_script.sh // to upload the MYSQL-database-dump to aws S3 bucket.
-8.  
 
-
-===================================================================================
-NOTES:
-
-C:\Users\sudar\space-1\GitLabPersonal\devops\remote_key
-
-mysql client and aws client is installed in remote_host.
-mysql server is published at port 3307:3306
-
+8.  directory pipeline 
+9. Jenkinsfile
+10. Dockerfile
+11. 
 
 ===================================================================================
 COMMANDS USED:
@@ -39,6 +33,28 @@ $ ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
 $ docker cp devops_remote_host_1:/root/.ssh/id_rsa.pub ./id_rsa.pub
 $ cat id_rsa.pub > /home/remote_user/.ssh/authorized_keys
 $ docker cp ./id_rsa devops_jenkins_1:/root/.ssh/id_rsa
+
+===================================================================================
+NOTES:
+   TODO: FOR MORE DETAILED INFORMATION ON THE ENTIRE PROCESS, CMDS, DSL, AND NOTES
+   REFER TO GITLAB REPOSITORY 'Notes' -> Jenkins-notes.txt.
+
+C:\Users\sudar\space-1\GitLabPersonal\devops\remote_key
+
+mysql client and aws client is installed in remote_host.
+mysql server is published at port 3307:3306
+
+PROBLEM STATEMENT:
+   W.R.T Timeline of creation, Until step 7, all contents are towards creating 
+   3 images '1. Jenkins, 2. Centos-remote_host, 3. my-sql Database.' And 
+   setting up the ssh key pairs, deploying the Database backup to AWS S3 bucket
+   using aws CLI. Also automating this process using bash script.
+
+   From step 8, all the steps are towards building a maven project
+
+
+===================================================================================
+
 
 
 
