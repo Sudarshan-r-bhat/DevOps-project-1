@@ -9,7 +9,7 @@ echo $PASS >> .auth
 # syntax: scp -i <privatekey> <file-path> user@host:<remote-file-path>
 
 scp -i ./id_rsa .auth prod_user@pipeline_prod_host_1:/tmp/.auth
-scp -i ./id_rsa prod_deploy.sh prod_user@pipeline_prod_host_1:/tmp/prod_deploy.sh
+scp -i ./id_rsa ./prod_env/prod_deploy.sh prod_user@pipeline_prod_host_1:/tmp/prod_deploy.sh
 
 
 

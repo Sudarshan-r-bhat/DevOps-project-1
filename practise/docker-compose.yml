@@ -1,16 +1,28 @@
 version : '3.7'
 services:
+  prod_docker:
+    image: docker:latest
+    working_dir: /var/workspace 
+    ports:
+     - "8081:8081"
+     - "22:22"
+    stdin_open: true
+    tty: true
+    volumes:
+     - "docker_prod_certs_ca:/certs/ca"
+     - "docker_prod_certs_client:/certs/client"
+     - "docker_prod_ssh:/root/.ssh"
+     - "docker_prod_data:/var"
+    networks:
+     - net
   jenkins:
-    image: jenkins/docker
-    build:
-      context: pipeline/prod_env
-      dockerfile: prod_jenkins_dockerfile
+    image: jenkins/jenkins:latest
     user: root
     ports:
      - "8080:8080"
      - "50000:50000"
     volumes:
-     - "jenkins_var:/var"
+     - "jenkins_home:/var/jenkins_home"
     networks:
      - net
   remote_host:
@@ -18,8 +30,6 @@ services:
     build:
       context: .
       dockerfile: centos-build-Dockerfile
-    ports:
-     - "22:22"
     volumes:
      - "remote_host_data:/tmp"
     networks:
@@ -42,11 +52,14 @@ services:
 networks:
   net:
 volumes:
-  jenkins_var:
+  jenkins_home:
   mysql_data:
   mysql_config:
   remote_host_data:
-
+  docker_prod_certs_ca:
+  docker_prod_certs_client:
+  docker_prod_data:
+  docker_prod_ssh:
 
 # The mysql needs to have 2 volumes one for config and the other for data.
 # store all persistant data to /tmp directory of 'REMOTE_HOST'

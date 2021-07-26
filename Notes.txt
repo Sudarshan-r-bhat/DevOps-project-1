@@ -10,8 +10,12 @@ Timeline of creation:
 9. Jenkinsfile
 10. Dockerfile
 11. push_docker_java.sh
-12. 
-13. 
+12. deploy.sh
+13. prod_env -> prod_deploy.sh
+14. prod_env -> prod_docker_compose.yml
+15. prod_env -> prod_jenkins_dockerfile
+16. custom-hooks.sh
+
 ===================================================================================
 COMMANDS USED:
 
@@ -38,6 +42,20 @@ $ docker cp ./id_rsa devops_jenkins_1:/root/.ssh/id_rsa
 // TO TRANSFER FILES OVER SCP AND TO RUN CMD OVER SSH:
 $ scp -i <privatekey> <host-file-path> user@host:<remote-file-path>
 $ ssh -i <privatekey> user@host "command-to-execute"
+
+
+// DOCKER PRODUCTION SERVER SETUP
+Note: This is a Alpine based Linux container.
+   All linux containers don't have open ssh 22 port.
+   Either cause they are meant to be client machines or coz of security reasons.
+   So, to setup a ssh server 
+   $ apk add openssh
+   $ vi /etc/ssh/sshd_config -> PermitRootLogin yes and uncomment # Port 22
+   $ service sshd restart
+   $ docker run -ti --name devops_prod_docker_1 --network devops_net -v devops_docker-certs-ca:/certs/ca -v devops_docker-certs-client:/certs/client docker:latest
+
+
+
 
 ===================================================================================
 NOTES:

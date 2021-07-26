@@ -13,5 +13,11 @@ docker exec -ti devops_jenkins_1 mkdir /root/.ssh
 docker cp ./id_rsa devops_jenkins_1:/root/.ssh/id_rsa
 docker exec -ti devops_jenkins_1 chmod 400 /root/.ssh/id_rsa
 
+# copy the same to prod server as well.
+docker cp ./id_rsa devops_prod_docker_1:/root/.ssh/id_rsa
+docker cp ./id_rsa.pub devops_prod_docker_1:/root/.ssh/authorized_keys
+
+docker exec -ti devops_prod_docker_1 chmod 400 /root/.ssh/id_rsa
+docker exec -ti devops_prod_docker_1 chmod 700 /root/.ssh/authorized_keys
 
 
