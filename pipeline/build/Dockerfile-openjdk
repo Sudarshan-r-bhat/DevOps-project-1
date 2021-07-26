@@ -1,5 +1,5 @@
 FROM openjdk:11.0.12-jre-slim
 RUN mkdir /app
 WORKDIR /app
-COPY ./devops_java_app/target/*.jar /app/app.jar
+COPY ../devops_java_app/target/*.jar /app/app.jar
 CMD java -jar /app/app.jar

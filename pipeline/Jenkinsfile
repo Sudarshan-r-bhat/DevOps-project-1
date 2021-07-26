@@ -1,32 +1,36 @@
 pipeline {
     agent any
+
+    environment {
+        PASS credentials("DOCKER_PASSWD")
+    }
     stages {
         stage('Build') {
             steps{
                 sh """
-                        ./build-java.sh && \
-                        ./build-docker-compose.sh
+                        ./build/build-java.sh && \
+                        ./build/build-docker-compose.sh
                     """
             }
             
         }
         stage('Test') {
             steps{
-                sh("./test-java.sh")
+                sh("./test/test-java.sh")
             }
             
         }
 
         stage('Push') {
             steps{
-                sh('./push_docker_java.sh')
+                sh('./push/push_docker_java.sh')
 
             }
         }
 
         stage('Deploy') {
             steps {
-                sh('./deploy.sh')
+                sh('./deploy/deploy.sh')
             }
         }
     }

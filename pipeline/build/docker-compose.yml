@@ -3,7 +3,7 @@ services:
   java_app:
     build:
       context: .
-      dockerfile: java-jre-dockerfile
+      dockerfile: Dockerfile-openjdk
     ports:
      - "8081:8081"
 

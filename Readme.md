@@ -12,15 +12,17 @@ CLASSIFICATION:
 
     build =>
         build-java.sh, 
-        java-jre-dockerfile, 
-        java-app-docker-compose.yml, 
+        Dockerfile-openjdk, 
+        docker-compose.yml, 
         build-docker-compose.sh
 
     test =>
         test-java.sh
 
+    push => 
+        push-docker-java.sh
+
     deploy => 
-        push-docker-java.sh, 
         deploy.sh
 
     pipeline => 
@@ -28,8 +30,8 @@ CLASSIFICATION:
 
 
     prod-environment =>
-        prod_docker_compose.yml,
-        prod_dockerfile,
+        docker-compose-prod.yml,
+        Dockerfile-prod,
         prod_deploy.sh
 
 ```
