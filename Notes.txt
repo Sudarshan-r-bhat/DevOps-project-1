@@ -1,17 +1,17 @@
 Timeline of creation:
 1. centos-build-dockerfile
 2. docker-compose.yml
-3. remote_key
-4. remote_key.pub
-5. id_rsa
-6. id_rsa.pub
-7. db_script.sh // to upload the MYSQL-database-dump to aws S3 bucket.
+3. copy_ssh_key.cmd/sh     // this is to copy the ssh private key from remote-host to jenkins container.
+4. id_rsa
+5. id_rsa.pub
+6. db_script.sh // to upload the MYSQL-database-dump to aws S3 bucket.
 
-8.  directory pipeline 
+8.  directory pipeline ---> 8 to _
 9. Jenkinsfile
 10. Dockerfile
-11. 
-
+11. push_docker_java.sh
+12. 
+13. 
 ===================================================================================
 COMMANDS USED:
 
@@ -30,9 +30,14 @@ $ mysql -h devops_db-host_1 -u root -p
 $ ssh-keygen -t rsa -b 2048 -m PEM <optional-filename>
    or
 $ ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
+
 $ docker cp devops_remote_host_1:/root/.ssh/id_rsa.pub ./id_rsa.pub
 $ cat id_rsa.pub > /home/remote_user/.ssh/authorized_keys
 $ docker cp ./id_rsa devops_jenkins_1:/root/.ssh/id_rsa
+
+// TO TRANSFER FILES OVER SCP AND TO RUN CMD OVER SSH:
+$ scp -i <privatekey> <host-file-path> user@host:<remote-file-path>
+$ ssh -i <privatekey> user@host "command-to-execute"
 
 ===================================================================================
 NOTES:
@@ -45,12 +50,18 @@ mysql client and aws client is installed in remote_host.
 mysql server is published at port 3307:3306
 
 PROBLEM STATEMENT:
+1.
    W.R.T Timeline of creation, Until step 7, all contents are towards creating 
    3 images '1. Jenkins, 2. Centos-remote_host, 3. my-sql Database.' And 
    setting up the ssh key pairs, deploying the Database backup to AWS S3 bucket
    using aws CLI. Also automating this process using bash script.
-
-   From step 8, all the steps are towards building a maven project
+2.
+   From step 8, all the steps are towards building a maven project -> automating the build, test, docker-hub 
+   push using separate bash scripts in corresponding stages of the jenkinsfile. -> a deploy script is used to
+   transfer the docker-auth detials, image details to the production server for deployment over scp.
+   The production server, has another deploy script, which pulls the docker image and runs the container.
+   This deploy script in production server is triggered by a command over ssh.
+   cmd used are ssh, scp, sed
 
 
 ===================================================================================

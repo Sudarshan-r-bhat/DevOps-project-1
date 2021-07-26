@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  java_app:
+    build:
+      context: .
+      dockerfile: java-jre-dockerfile
+    ports:
+     - "8081:8081"
+

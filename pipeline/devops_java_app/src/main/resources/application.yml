@@ -1,0 +1,6 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: devops_java_app
+

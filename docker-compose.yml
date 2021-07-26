@@ -1,13 +1,16 @@
 version : '3.7'
 services:
   jenkins:
-    image: jenkins/jenkins:latest
+    image: jenkins/docker
+    build:
+      context: pipeline/prod_env
+      dockerfile: prod_jenkins_dockerfile
     user: root
     ports:
      - "8080:8080"
      - "50000:50000"
     volumes:
-     - "jenkins_home:/var/jenkins_home"
+     - "jenkins_var:/var"
     networks:
      - net
   remote_host:
@@ -39,7 +42,7 @@ services:
 networks:
   net:
 volumes:
-  jenkins_home:
+  jenkins_var:
   mysql_data:
   mysql_config:
   remote_host_data:
