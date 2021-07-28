@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+
+  deploy_node:
+    image: debian-ssh 
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    volumes:
+     - "prod_data:/var/workspace"
+    stdin_open: true
+    tty: true
+    networks:
+     - net
+
+  jenkins:
+    image: jenkins/jenkins:latest
+    user: root
+    ports:
+     - "8080:8080"
+     - "50000:50000"
+    volumes:
+     - "jenkins_home:/var/jenkins_home"
+    networks:
+     - net
+
+  version_control:
+    image: gitlab/gitlab-ce:latest
+    hostname: gitlab.example.com
+    volumes:
+     - "GITLAB_HOME_config:/etc/gitlab"
+     - "GITLAB_HOME_logs:/var/log/gitlab"
+     - "GITLAB_HOME_data:/var/opt/gitlab"
+    ports:
+     - "80:80"
+     - "443:443"
+     - "22:22"
+    networks:
+     - net
+volumes:
+  prod_data:
+  jenkins_home:
+  GITLAB_HOME_config:
+  GITLAB_HOME_logs:
+  GITLAB_HOME_data:
+
+networks: 
+  net:

@@ -54,7 +54,7 @@ Note: This is a Alpine based Linux container.
    $ service sshd restart
    $ docker run -ti --name devops_prod_docker_1 --network devops_net -v devops_docker-certs-ca:/certs/ca -v devops_docker-certs-client:/certs/client docker:latest
 
-
+$ docker run  --net devops_net --name prod_server debian-ssh -d
 
 
 ===================================================================================

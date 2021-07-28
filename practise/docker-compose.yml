@@ -29,7 +29,7 @@ services:
     image: centos/remote_host
     build:
       context: .
-      dockerfile: centos-build-Dockerfile
+      dockerfile: Dockerfile-centos8-build
     volumes:
      - "remote_host_data:/tmp"
     networks:
