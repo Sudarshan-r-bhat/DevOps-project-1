@@ -1,7 +1,7 @@
 # DEVOPS
 
 <P> This Repository contains the Devops process CI/CD and deployment of the jar builds using Gitlab, Jenkins, Dockers and AWS CLI.<br>
-Also automating the some of the process using Bash Scripting.</p>
+Also automating some of the process using Bash Script.</p>
 
 ## For visualization of project files and directory structure.
 
